@@ -4,6 +4,8 @@ function Calculator (inputString) {
 
 Calculator.prototype.lexer = function (inputString) {
 
+  // still need to add an error message if string/character is unparsable
+
   const tokenTypes = [
     ['NUMBER', /^\d+/],
     ['ADD', /^\+/],
@@ -18,16 +20,15 @@ Calculator.prototype.lexer = function (inputString) {
   var streamArray = [];
   var valueToPush;
   var keyToPush;
-  var index = 0;
+  // var index = 0;
   var tempInput = inputString;
-  var empty = false;
 
   // figure out how to change inputString and break out of while loop when inputString or tempString is empty;
   while (tempInput) {
     for (var i = 0; i < tokenTypes.length; i++) {
-      if (tokenTypes[index][1].exec(tempInput) !== null) {
+      if (tokenTypes[i][1].exec(tempInput) !== null) {
         // console.log("token type", tokenTypes[i][1]);
-        // console.log("index", index);
+        // console.log("index", i);
         // console.log("if statement value", tokenTypes[i][1].exec(inputString));
         valueToPush = tokenTypes[i][1].exec(tempInput)[0];
         // console.log("value", valueToPush);
@@ -36,41 +37,53 @@ Calculator.prototype.lexer = function (inputString) {
         streamArray.push({ name: keyToPush, value: valueToPush });
         // console.log("streamArray", streamArray);
         tempInput = tempInput.slice(valueToPush.length);
-        index = 0;
+        // index = 0;
         break;
-      } else {
-        index++;
-        // console.log('got into the else statement, index is now', index);
       }
     }
   }
 
   return streamArray;
 
-};
+  // real answer
 
-    // let currentIndex = 0;
-    // streamObj = [];
-    // inputAsArray = tokenTypes.split('');
-    // let matcher = function () {
-    //   if (tokenTypes.test([currentIndex][1])) {
+//   Calculator.prototype.lexer = function(inputString) {
+//   var tokenTypes = [
+//     ["NUMBER",    /^\d+/ ],
+//     ["ADD",       /^\+/  ],
+//     ["SUB",       /^\-/  ],
+//     ["MUL",       /^\*/  ],
+//   ["DIV", /^\//],
+//     ["LPAREN", /^\(/],
+//     ["RPAREN", /^\)/]
+//   ];
 
-    //   }
-    // };
+//   var tokens = [];
+//   var matched = true;
 
-    // while ((myArray = myRe.exec(str)) !== null) {
-    //   var msg = 'Found ' + myArray[0] + '. ';
-    //   msg += 'Next match starts at ' + myRe.lastIndex;
-    //   console.log(msg);
-    // }
+//   while (inputString.length & gt; 0 & amp;&amp; matched) {
+//     matched = false;
 
-    // let nextIndex = currentIndex + 1;
-    // let tokenMatch = false;
+//     tokenTypes.forEach(tokenRegex =&gt; {
+//       var token = tokenRegex[0];
+//       var regex = tokenRegex[1];
 
-    // tokenTypes.indexOf()
+//       var result = regex.exec(inputString);
 
-    // return inputString[currentIndex];
+//       if (result !== null) {
+//         matched = true;
+//         tokens.push({ name: token, value: result[0] });
+//         inputString = inputString.slice(result[0].length)
+//       }
+//     })
+
+//     if (!matched) {
+//       throw new Error("Found unparseable token: " + inputString);
+//     }
 
 //   }
 
+//   return tokens;
 // };
+
+};
