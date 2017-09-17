@@ -60,3 +60,23 @@
   * babeljs.io
   * "streama"?
 
+## grammar
+
+E => T A
+A => + T A
+     - T A
+     epsilon
+T => F B
+B => * F B
+     / F B
+     epsilon
+F => ( E )
+     - F
+     NUMBER
+where
+
+E = Expression
+T = Term
+F = Factor
+A = ExpressionRemainder // a placeholder created to remove the left-recursion
+B = TermRemainder // same as above
